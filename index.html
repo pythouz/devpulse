@@ -1,51 +1,127 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DevPulse — منصة المطورين</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="app">
     <!-- الهيدر -->
     <header class="header">
-      <h1>⚡ DevPulse</h1>
-      <div class="auth-section">
-        <input type="text" id="github-username" placeholder="اسم مستخدم GitHub" />
-        <input type="password" id="github-token" placeholder="Personal Access Token" />
-        <button id="connect-btn">🔗 ربط الحساب</button>
+      <div class="logo">
+        <h1>⚡ DevPulse</h1>
+        <span class="tagline">منصة المطورين المفتوحة</span>
+      </div>
+      
+      <div class="auth-section" id="auth-section">
+        <input type="text" id="github-username" placeholder="اسم مستخدم GitHub">
+        <input type="password" id="github-token" placeholder="Personal Access Token">
+        <button id="connect-btn" class="btn-primary">🔗 ربط الحساب</button>
+      </div>
+      
+      <div class="user-info" id="user-info" style="display: none;">
+        <span id="user-name"></span>
+        <button id="logout-btn" class="btn-secondary">خروج</button>
       </div>
     </header>
 
     <div class="main-layout">
-      <!-- السايدبار: الأدوات المثبتة -->
-      <aside class="sidebar" id="tools-sidebar">
-        <h3>🧰 أدواتي</h3>
-        <div id="installed-tools-list"></div>
-        <button id="add-tool-btn">➕ إضافة أداة جديدة</button>
+      <!-- السايدبار -->
+      <aside class="sidebar">
+        <div class="sidebar-section">
+          <h3>🧰 أدواتي</h3>
+          <div id="tools-list" class="tools-list">
+            <p class="empty-message">لا توجد أدوات مثبتة</p>
+          </div>
+          <button id="add-tool-btn" class="btn-secondary full-width">➕ إضافة أداة</button>
+        </div>
+        
+        <div class="sidebar-section">
+          <h3>📊 الإحصائيات</h3>
+          <div class="stats">
+            <div class="stat-item">
+              <span class="stat-label">الأدوات المثبتة</span>
+              <span class="stat-value" id="tools-count">0</span>
+            </div>
+          </div>
+        </div>
       </aside>
 
       <!-- المحتوى الرئيسي -->
       <main class="content">
-        <!-- الفيد -->
-        <section class="feed" id="main-feed">
-          <h2>📰 آخر التحديثات</h2>
-          <div id="feed-items">جاري التحميل من جيت هب...</div>
+        <!-- قسم الترحيب -->
+        <section class="welcome-section" id="welcome-section">
+          <h2>مرحباً بك في DevPulse! 👋</h2>
+          <p>منصة اجتماعية مفتوحة المصدر بالكامل وعالية الأداء</p>
+          <div class="features">
+            <div class="feature-card">
+              <div class="feature-icon">🌐</div>
+              <h4>المجتمعات التقنية</h4>
+              <p>تواصل مع المطورين وشارك مشاريعك</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">💬</div>
+              <h4>دردشة مباشرة</h4>
+              <p>تفاعل فوري مع المجتمع</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">🛠️</div>
+              <h4>الأدوات المفتوحة</h4>
+              <p>استخدم وشارك أدواتك البرمجية</p>
+            </div>
+          </div>
         </section>
 
-        <!-- مشغل الأداة (مخفي افتراضيًا) -->
-        <section class="tool-runner" id="tool-runner" hidden>
-          <div class="tool-header">
-            <h3 id="tool-title">اسم الأداة</h3>
-            <button id="close-tool">✕</button>
+        <!-- الفيد -->
+        <section class="feed-section" id="feed-section" style="display: none;">
+          <div class="section-header">
+            <h2>📰 آخر النشرات والمنشورات الحية</h2>
+            <div class="filter-tabs">
+              <button class="tab-btn active" data-filter="all">الكل</button>
+              <button class="tab-btn" data-filter="articles">مقالات</button>
+              <button class="tab-btn" data-filter="updates">تحديثات</button>
+            </div>
           </div>
-          <iframe id="tool-frame" sandbox="allow-scripts allow-forms allow-same-origin allow-downloads"></iframe>
+          
+          <div id="feed-container" class="feed-container">
+            <div class="loading">جاري جلب البيانات من مستودع جيت هب...</div>
+          </div>
+        </section>
+
+        <!-- مشغل الأدوات -->
+        <section class="tool-runner-section" id="tool-runner-section" style="display: none;">
+          <div class="tool-header">
+            <h3 id="tool-name">اسم الأداة</h3>
+            <button id="close-tool-btn" class="btn-icon">✕</button>
+          </div>
+          <div class="tool-container">
+            <iframe id="tool-iframe" sandbox="allow-scripts allow-forms allow-same-origin allow-downloads allow-popups"></iframe>
+          </div>
         </section>
       </main>
     </div>
   </div>
 
-  <script type="module" src="js/app.js"></script>
+  <!-- نافذة إضافة أداة -->
+  <div class="modal" id="add-tool-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>➕ إضافة أداة جديدة</h3>
+        <button class="btn-icon" id="close-modal-btn">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>رابط المستودع (GitHub Repository)</label>
+          <input type="text" id="repo-url" placeholder="https://github.com/user/repo">
+          <small>يجب أن يحتوي المستودع على ملف pulse-app.json</small>
+        </div>
+        <button id="confirm-add-tool" class="btn-primary full-width">إضافة الأداة</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
 </body>
 </html>
