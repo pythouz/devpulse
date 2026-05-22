@@ -1,0 +1,31 @@
+{
+  "name": "Social Video Downloader",
+  "description": "Download videos from TikTok, Instagram, YouTube",
+  "version": "1.0.0",
+  "entry": "https://username.github.io/repo/tool.html",
+  "category": "Media",
+  "author": {
+    "github": "username",
+    "profile": "https://github.com/username"
+  },
+  "permissions": ["download", "clipboard"],
+  "inputs": [
+    {
+      "name": "video_url",
+      "type": "url",
+      "label": "رابط الفيديو",
+      "required": true,
+      "placeholder": "https://..."
+    }
+  ],
+  "settings": {
+    "width": "400px",
+    "height": "500px",
+    "resizable": true
+  },
+  "metadata": {
+    "license": "MIT",
+    "repository": "https://github.com/username/repo",
+    "docs": "https://github.com/username/repo#readme"
+  }
+}
